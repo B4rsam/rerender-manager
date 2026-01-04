@@ -18,7 +18,19 @@ main {
     padding: 24px;
     color: white;
     display: flex;
-    align-items: center;
     width: calc(100% - 48px);
-    flex-direction: column;
+    justify-content: space-between;
 }
+
+.card .text {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.card .btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
