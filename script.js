@@ -1,4 +1,38 @@
+class State {
+    constructor() {
+        this.vdom = null;
+    }
+
+    generateDom() {
+        const body = [...document.getElementsByTagName("body")];
+        let stack = [];
+        let store = {};
+
+        stack.push(body[0]);
+
+        while(stack.length > 0) {
+            const node = stack.pop();
+
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                if (node.childNodes.length) {
+                    [...node.childNodes].forEach((child) => stack.push(child));
+                }
+                store[node.id] = {
+                    id: node.id,
+                    type: node.tagName,
+                    parent: node.parentNode.id,
+                };
+            } 
+        }
+
+        this.vdom = store;
+    }
+}
+
+const state = new State();
+
 let list = [];
+
 
 const handleDelete = (itemID) => {
     list = list.filter(({ id }) => itemID !== id);
@@ -29,6 +63,9 @@ const generateList = () => {
     container.innerHTML = data;
 
     generateEventListeners();
+    state.generateDom();
+
+    console.log(state.vdom)
 
     return;
 };
