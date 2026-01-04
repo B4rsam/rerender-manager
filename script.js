@@ -1,6 +1,7 @@
 class State {
     constructor() {
         this.vdom = null;
+        this.variables = [];
     }
 
     generateDom() {
@@ -27,12 +28,23 @@ class State {
 
         this.vdom = store;
     }
+
+    createStateVariable(defaultValue) {
+        const index = this.variables.push(defaultValue) - 1;
+
+        const getValue = () => this.variables[index];
+
+        const mutateState = (value) => {
+            this.variables[index] = value;
+        };
+
+        return [getValue, mutateState];
+    }
 }
 
 const state = new State();
 
 let list = [];
-
 
 const handleDelete = (itemID) => {
     list = list.filter(({ id }) => itemID !== id);
